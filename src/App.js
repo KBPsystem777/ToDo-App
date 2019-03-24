@@ -1,5 +1,5 @@
 import React from 'react'
-import '@fontawesome/fontawesome-free/css/all.min.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'bootstrap-css-only/css/bootstrap.min.css'
 import 'mdbreact/dist/css/mdb.css'
 import { MDBBtn, MDBInput, MDBModal, MDBModalBody,
@@ -7,7 +7,7 @@ import { MDBBtn, MDBInput, MDBModal, MDBModalBody,
   MDBContainer, MDBRow, MDBCol } 
 from 'mdbreact'
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -36,43 +36,47 @@ class App extends Component {
         }
       ]
     }
-
-    addEvent = () => {
-      const newArray = [ ...this.state.events]
-      newArray.push({
-        id: newArray.length ? newArray[newArray.lenght - 1].id + 1,
-        time: this.state.time,
-        title: this.state.title,
-        location: this.state.location,
-        description: this.state.description
-      })
-
-      this.setState({ events: newArray })
-      this.setState({
-        time: "",
-        title: "",
-        location: "",
-        description: ""
-      })
-    }
-
-    handleInput = inputName => value => {
-      const nextValue = value
-      this.setState({
-        [inputName]: nextValue,
-      })
-    }
-    handleDelete = eventId => {
-      const events = this.state.events.filter(e => e.id !== eventId)
-      this.setState({ events })
-    }
-    toggleModal = () => {
-      this.setState({
-        modal: !this.state.modal
-      })
-    }
   }
 
+  addEvent = () => {
+    const newArray = [...this.state.events]
+    newArray.push({
+      id: newArray.length ? newArray[newArray.lenght - 1].id + 1 : 1,
+      time: this.state.time,
+      title: this.state.title,
+      location: this.state.location,
+      description: this.state.description
+    })
+
+    this.setState({
+      events: newArray
+    })
+    this.setState({
+      time: "",
+      title: "",
+      location: "",
+      description: ""
+    })
+   }
+
+  handleInputChange = inputName => value => {
+    const nextValue = value
+    this.setState({
+      [inputName]: nextValue,
+    })
+  }    
+  
+  handleDelete = eventId => {
+    const events = this.state.events.filter(e => e.id !== eventId)
+    this.setState({
+      events
+    })
+  }
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
 
   render() {
     return(
@@ -108,12 +112,124 @@ class App extends Component {
                   It is going to be busy that day. You have {" "}
                   <b>{this.state.events.length} evens</b> today
                   </h6>
+                  <h1 className="my-3">
+                    <MDBRow>
+                    <MDBCol xs="3" className="text-center">
+                      <MDBIcon icon="sun" fixed />
+                    </MDBCol>
+                    <MDBCol xs="9">Sunny</MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                    <MDBCol xs="3" className="text-center">
+                    <MDBIcon icon="termometer-three-quarters" fixed/>
+                    </MDBCol>
+                    <MDBCol xs="9">23C</MDBCol>
+                    </MDBRow>
+                  </h1>
+                  <p>Dont forget your glasses</p>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
+        <MDBModal isOpen={this.state.modal} toggle={this.toggleModal}>
+         <MDBModalHeader
+          className="text-center"
+          titleClass="w-100 font-weight-bold"
+          toggle={this.toggleModal}
+         >
+          Add New Event
+         </MDBModalHeader>
+        </MDBModal>
+        <MDBModalBody>
+          <form className="mx-3 grey-text">
+           <MDBInput
+              name="time"
+              label="Time"
+              icon="clock"
+              hint="12:30"
+              group
+              type="text"
+              getValue={this.handleInputChange("time")}
+           />
+           <MDBInput
+              name="title"
+              label="Title"
+              icon="edit"
+              hint="Briefing"
+              group
+              type="text"
+              getValue={this.handleInputChange("title")}
+            />
+            <MDBInput
+              name="location"
+              label="Location (optional)"
+              icon="map"
+              group
+              type="text"
+              getValue={this.handleInputChange("location")}
+            />
+            <MDBInput
+              name="description"
+              label="Description (optional)"
+              icon="sticky-note"
+              group
+              type="textarea"
+              getValue={this.handleInputChange("description")}
+            />
+          </form>
+        </MDBModalBody>
+
+        <MDBModalFooter className="justify-content-center">
+         <MDBBtn
+          color="info"
+          onClick={() => {
+            this.toggleModal()
+            this.addEvent()
+          }}
+         >
+           Add
+         </MDBBtn>
+        </MDBModalFooter>
       </React.Fragment>
     )
   }
 }
 
+class Event extends React.Component {
+  render() {
+    return(
+      <React.Fragment>
+        <div className="media mt-1">
+          <h3 className="h3-responsive font-weight-bold mr-3">
+            {this.props.time}
+          </h3>
+          <MDBBadge 
+            color="danger"
+            className="ml-2 float-right"
+            onClick={() => {
+              this.props.onDelete(this.props.id)
+            }}
+          > -
+          </MDBBadge>
+          <h6 className="mt-0 font-weight-bold">{this.props.location}</h6>{" "}
+          {
+            this.props.location && (
+              <React.Fragment>
+                <p className="font-smaller mb-0">
+                  <MDBIcon icon="location-arrow" />{this.props.location}
+                </p>
+              </React.Fragment>
+            )
+          }
+        </div>
+        {
+          this.props.description &&
+          (<p className="p-2 mb-4 blue-grey lighten-5 blue-grey lighten-5">
+            {this.props.description}
+          </p>)
+        }
+      </React.Fragment>
+    )
+  }
+}
 
+export default App
