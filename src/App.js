@@ -6,6 +6,7 @@ import { MDBBtn, MDBInput, MDBModal, MDBModalBody,
   MDBModalHeader, MDBModalFooter, MDBIcon, MDBBadge,
   MDBContainer, MDBRow, MDBCol } 
 from 'mdbreact'
+import Footer from './Components/Footer'
 
 class App extends React.Component {
   constructor(props) {
@@ -234,4 +235,13 @@ class Event extends React.Component {
   }
 }
 
-export default App
+const MySched = () => (
+  <React.Fragment>
+    <div>
+      <Event />
+      <App />
+    </div>
+    <Footer />
+  </React.Fragment>
+)
+export default MySched
