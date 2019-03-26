@@ -138,57 +138,57 @@ class App extends React.Component {
          >
           Add New Event
          </MDBModalHeader>
-        </MDBModal>
-        <MDBModalBody>
-          <form className="mx-3 grey-text">
-           <MDBInput
-              name="time"
-              label="Time"
-              icon="clock"
-              hint="Ex: 12:30AM"
-              group
-              type="text"
-              getValue={this.handleInputChange("time")}
-           />
-           <MDBInput
-              name="title"
-              label="Title"
-              icon="edit"
-              hint="Ex: Briefing"
-              group
-              type="text"
-              getValue={this.handleInputChange("title")}
+          <MDBModalBody>
+            <form className="mx-3 grey-text">
+            <MDBInput
+                name="time"
+                label="Time"
+                icon="clock"
+                hint="Ex: 12:30AM"
+                group
+                type="text"
+                getValue={this.handleInputChange("time")}
             />
             <MDBInput
-              name="location"
-              label="Location (optional)"
-              icon="map"
-              group
-              type="text"
-              getValue={this.handleInputChange("location")}
-            />
-            <MDBInput
-              name="description"
-              label="Description (optional)"
-              icon="sticky-note"
-              group
-              type="textarea"
-              getValue={this.handleInputChange("description")}
-            />
-          </form>
-        </MDBModalBody>
+                name="title"
+                label="Title"
+                icon="edit"
+                hint="Ex: Briefing"
+                group
+                type="text"
+                getValue={this.handleInputChange("title")}
+              />
+              <MDBInput
+                name="location"
+                label="Location (optional)"
+                icon="map"
+                group
+                type="text"
+                getValue={this.handleInputChange("location")}
+              />
+              <MDBInput
+                name="description"
+                label="Description (optional)"
+                icon="sticky-note"
+                group
+                type="textarea"
+                getValue={this.handleInputChange("description")}
+              />
+            </form>
+          </MDBModalBody>
 
-        <MDBModalFooter className="justify-content-center">
-         <MDBBtn
-          color="info"
-          onClick={() => {
-            this.toggleModal()
-            this.addEvent()
-          }}
-         >
-           Add
-         </MDBBtn>
-        </MDBModalFooter>
+          <MDBModalFooter className="justify-content-center">
+          <MDBBtn
+            color="info"
+            onClick={() => {
+              this.toggleModal()
+              this.addEvent()
+            }}
+          >
+            Add
+          </MDBBtn>
+          </MDBModalFooter>
+        </MDBModal>
       </React.Fragment>
     )
   }
@@ -211,12 +211,12 @@ class Event extends React.Component {
               }}
             > -
           </MDBBadge>
-            <h6 className="mt-0 font-weight-bold">{this.props.location}</h6>{" "}
+            <h6 className="mt-0 font-weight-bold"> {this.props.title}</h6>{" "}
             {
               this.props.location && (
                 <React.Fragment>
                   <p className="font-smaller mb-0">
-                    <MDBIcon icon="location-arrow" />{this.props.location}
+                    <MDBIcon icon="location-arrow" /> {this.props.location}
                   </p>
                 </React.Fragment>
               )
