@@ -110,7 +110,7 @@ class App extends React.Component {
                   <h3 className="text-uppercase my-3">Schedule</h3>
                   <h6 className="my-3">
                   It is going to be busy that day. You have {" "}
-                  <b>{this.state.events.length} evens</b> today
+                  <b>{this.state.events.length} events</b> today
                   </h6>
                   <h1 className="my-3">
                     <MDBRow>
@@ -145,7 +145,7 @@ class App extends React.Component {
               name="time"
               label="Time"
               icon="clock"
-              hint="12:30"
+              hint="Ex: 12:30AM"
               group
               type="text"
               getValue={this.handleInputChange("time")}
@@ -154,7 +154,7 @@ class App extends React.Component {
               name="title"
               label="Title"
               icon="edit"
-              hint="Briefing"
+              hint="Ex: Briefing"
               group
               type="text"
               getValue={this.handleInputChange("title")}
@@ -202,24 +202,26 @@ class Event extends React.Component {
           <h3 className="h3-responsive font-weight-bold mr-3">
             {this.props.time}
           </h3>
-          <MDBBadge 
-            color="danger"
-            className="ml-2 float-right"
-            onClick={() => {
-              this.props.onDelete(this.props.id)
-            }}
-          > -
+          <div className="media-body mb-3 mb-lg-3">
+            <MDBBadge
+              color="danger"
+              className="ml-2 float-right"
+              onClick={() => {
+                this.props.onDelete(this.props.id)
+              }}
+            > -
           </MDBBadge>
-          <h6 className="mt-0 font-weight-bold">{this.props.location}</h6>{" "}
-          {
-            this.props.location && (
-              <React.Fragment>
-                <p className="font-smaller mb-0">
-                  <MDBIcon icon="location-arrow" />{this.props.location}
-                </p>
-              </React.Fragment>
-            )
-          }
+            <h6 className="mt-0 font-weight-bold">{this.props.location}</h6>{" "}
+            {
+              this.props.location && (
+                <React.Fragment>
+                  <p className="font-smaller mb-0">
+                    <MDBIcon icon="location-arrow" />{this.props.location}
+                  </p>
+                </React.Fragment>
+              )
+            }
+          </div>
         </div>
         {
           this.props.description &&
